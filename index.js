@@ -190,6 +190,14 @@ MiAqaraPlatform.prototype.parseMessage = function(msg, rinfo){
         that.log.error("Bad msg %s", msg);
         return;
     }
+
+    if (jsonObj['model'] === '') {
+        var model = that.ConfigUtil.getAccessoryAttribute(jsonObj['sid'], null, 'model', null);
+        if (model) {
+            jsonObj['model'] = model; 
+            msg = JSON.stringify(jsonObj);
+        }
+    }
     
     var cmd = jsonObj['cmd'];
     if (cmd === 'iam') {
@@ -249,7 +257,7 @@ MiAqaraPlatform.prototype.parseMessage = function(msg, rinfo){
             }
             
             var deviceSid = data[index];
-            if(!that.DeviceUtil.getBySid(deviceSid)) {
+            if (!that.DeviceUtil.getBySid(deviceSid)) {
                 var device = {
                     sid: deviceSid,
                     gatewaySid: gatewaySid,

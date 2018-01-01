@@ -2,10 +2,6 @@ const DeviceParser = require('./DeviceParser');
 const AccessoryParser = require('./AccessoryParser');
 
 class SingleSwitchLNParser extends DeviceParser {
-    constructor(platform) {
-        super(platform);
-    }
-    
     getAccessoriesParserInfo() {
         return {
             'SingleSwitchLN_Switch': SingleSwitchLNSwitchParser
@@ -15,10 +11,7 @@ class SingleSwitchLNParser extends DeviceParser {
 module.exports = SingleSwitchLNParser;
 
 class SingleSwitchLNSwitchParser extends AccessoryParser {
-    constructor(platform, accessoryType) {
-        super(platform, accessoryType)
-    }
-    
+
     getAccessoryCategory(deviceSid) {
         var serviceType = this.platform.ConfigUtil.getAccessoryServiceType(deviceSid, this.accessoryType);
         if(serviceType == 'Lightbulb') {
@@ -94,7 +87,7 @@ class SingleSwitchLNSwitchParser extends AccessoryParser {
             
             if(onCharacteristic.listeners('set').length == 0) {
                 onCharacteristic.on("set", function(value, callback) {
-                    var command = '{"cmd":"write","model":"ctrl_ln1","sid":"' + deviceSid + '","data":"{\\"channel_0\\":\\"' + (value ? 'on' : 'off') + '\\", \\"key\\": \\"${key}\\"}"}';
+                    var command = '{"cmd":"write","model":"' + that.model + '","sid":"' + deviceSid + '","data":"{\\"channel_0\\":\\"' + (value ? 'on' : 'off') + '\\", \\"key\\": \\"${key}\\"}"}';
                     if(that.platform.ConfigUtil.getAccessoryIgnoreWriteResult(deviceSid, that.accessoryType)) {
                         that.platform.sendWriteCommandWithoutFeedback(deviceSid, command);
                         that.callback2HB(deviceSid, this, callback, null);

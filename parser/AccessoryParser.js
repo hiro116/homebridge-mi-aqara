@@ -1,7 +1,8 @@
 class AccessoryParser {
-    constructor(platform, accessoryType) {
+    constructor(platform, accessoryType, model) {
         this.platform = platform;
         this.accessoryType = accessoryType;
+        this.model = model;
         
         this.Accessory = platform.Accessory;
         this.PlatformAccessory = platform.PlatformAccessory;

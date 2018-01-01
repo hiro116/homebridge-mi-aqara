@@ -2,10 +2,6 @@ const DeviceParser = require('./DeviceParser');
 const AccessoryParser = require('./AccessoryParser');
 
 class DuplexSwitchLNParser extends DeviceParser {
-    constructor(platform) {
-        super(platform);
-    }
-    
     getAccessoriesParserInfo() {
         return {
             'DuplexSwitchLN_Switch_Left': DuplexSwitchLNSwitchLeftParser,
@@ -16,10 +12,6 @@ class DuplexSwitchLNParser extends DeviceParser {
 module.exports = DuplexSwitchLNParser;
 
 class DuplexSwitchLNSwitchBaseParser extends AccessoryParser {
-    constructor(platform, accessoryType) {
-        super(platform, accessoryType)
-    }
-    
     getAccessoryCategory(deviceSid) {
         var serviceType = this.platform.ConfigUtil.getAccessoryServiceType(deviceSid, this.accessoryType);
         if(serviceType == 'Lightbulb') {
@@ -126,7 +118,7 @@ class DuplexSwitchLNSwitchLeftParser extends DuplexSwitchLNSwitchBaseParser {
     }
     
     getWriteCommand(deviceSid, value) {
-        return '{"cmd":"write","model":"ctrl_ln2","sid":"' + deviceSid + '","data":"{\\"channel_0\\":\\"' + (value ? 'on' : 'off') + '\\", \\"key\\": \\"${key}\\"}"}';
+        return '{"cmd":"write","model":"' + this.model + '","sid":"' + deviceSid + '","data":"{\\"channel_0\\":\\"' + (value ? 'on' : 'off') + '\\", \\"key\\": \\"${key}\\"}"}';
     }
 }
 
@@ -143,6 +135,6 @@ class DuplexSwitchLNSwitchRightParser extends DuplexSwitchLNSwitchBaseParser {
     }
     
     getWriteCommand(deviceSid, value) {
-        return '{"cmd":"write","model":"ctrl_ln2","sid":"' + deviceSid + '","data":"{\\"channel_1\\":\\"' + (value ? 'on' : 'off') + '\\", \\"key\\": \\"${key}\\"}"}';
+        return '{"cmd":"write","model":"' + this.model + '","sid":"' + deviceSid + '","data":"{\\"channel_1\\":\\"' + (value ? 'on' : 'off') + '\\", \\"key\\": \\"${key}\\"}"}';
     }
 }

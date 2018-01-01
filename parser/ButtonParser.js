@@ -3,10 +3,6 @@ const AccessoryParser = require('./AccessoryParser');
 const SwitchVirtualBasePressParser = require('./SwitchVirtualBasePressParser');
 
 class ButtonParser extends DeviceParser {
-    constructor(platform) {
-        super(platform);
-    }
-    
     getAccessoriesParserInfo() {
         return {
             'Button_StatelessProgrammableSwitch': ButtonStatelessProgrammableSwitchParser,
@@ -19,10 +15,6 @@ class ButtonParser extends DeviceParser {
 module.exports = ButtonParser;
 
 class ButtonStatelessProgrammableSwitchParser extends AccessoryParser {
-    constructor(platform, accessoryType) {
-        super(platform, accessoryType)
-    }
-    
     getAccessoryCategory(deviceSid) {
         return this.Accessory.Categories.PROGRAMMABLE_SWITCH;
     }
